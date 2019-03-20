@@ -18,38 +18,17 @@ import { HttpClient } from '@angular/common/http';
     // tempObservable.subscribe(data => console.log("Got our tasks!", data));
     return this._http.get('/api/tasks');
   }
-  // getTask(id) {
-  //   let tempObservable = this._http.get(`/api/tasks/${id}`)
-  //   tempObservable.subscribe(data => console.log("Specific task:", data));
-  // }
+
   createNewTask(data: any) {
     return this._http.post('/api/tasks', data);
   }
 
-  getOneTask1() {
-    let ID1 = '5c8b39f7348add6c448cb2df';
-    // let task1Observable = this._http.get('/api/tasks/'+ID1);
-    // task1Observable.subscribe(data => console.log("Got one task!", data));
-    return this._http.get('api/tasks/'+ID1);
+  deleteTask(id) {
+    return this._http.delete(`/api/tasks/${id}`);
   }
-
-  getOneTask2() {
-    let ID2 = '5c907862db8e792b40526ce6';
-    // let task2Observable = this._http.get('/api/tasks/'+ID2);
-    // task2Observable.subscribe(data => console.log("Got the other task!", data));
-    return this._http.get('/api/tasks/'+ID2);
-  }
-  getOneTask3() {
-    let ID3 = '5c90787cdb8e792b40526ce7';
-    // let task3Observable = this._http.get('/api/tasks/'+ID3);
-    // task3Observable.subscribe(data => console.log("Got the other task!", data));
-    return this._http.get('/api/tasks/'+ID3);
-  }
-  getOneTask4() {
-    let ID4 = '5c9078badb8e792b40526ce8';
-    // let task4Observable = this._http.get('/api/tasks/'+ID4);
-    // task4Observable.subscribe(data => console.log("Got the other task!", data));
-    return this._http.get('/api/tasks/'+ID4);
+  
+  editTask(id, data) {
+    return this._http.put(`/api/tasks/${id}`, data);
   }
 }
 

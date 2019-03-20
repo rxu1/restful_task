@@ -10,28 +10,31 @@ export class AppComponent implements OnInit {
   title = 'Restful Task API';
   tasks: any = [];
   task: any = [];
-  // task = {
-  //   title: '',
-  //   description: ''
-  // };
+  updateForm: boolean = false; 
+  selectedTaskId: string; 
+  updatedTask: any = {
+    title: '',
+    description: ''
+  }
 
   constructor(private _httpService: HttpService){}
     ngOnInit(){
-      // this.getTasksFromService();
-      // this.getOneTask1FromService();
-      // this.getOneTask2FromService();
-      // this.getOneTask3FromService();
-      // this.getOneTask4FromService();
+      this.task = {title: "", description: ""}
     }
-    mainButtonClick() {
-      this.getTasksFromService();
+    createTask = () => {
+      let observable = this._httpService.createNewTask(this.task);
+      observable.subscribe(data => {
+        console.log("Successfully created a task!", data);
+        this.task = {title: "", description:""};
+        this.getTasks();
+      })
     }
 
-    subButtonClick(id) {
-      let task = document.getElementById(id);
-      task.style.visibility = 'visible'
-    }
-    getTasksFromService() {
+    // subButtonClick(id) {
+    //   let task = document.getElementById(id);
+    //   task.style.visibility = 'visible'
+    // }
+    getTasks() {
       let observable = this._httpService.getTasks();
       observable.subscribe(data => {
         console.log("Got our tasks!", data);
@@ -39,33 +42,27 @@ export class AppComponent implements OnInit {
         // console.log(data['title']); 
       })
     }
-    getOneTask1FromService() {
-      
-      let observable1 = this._httpService.getOneTask1();
-      observable1.subscribe(data => {
-        console.log("Got one task!", data);
+    deleteTask = (id) => {
+      let observable = this._httpService.deleteTask(id);
+      observable.subscribe(data => {
+        console.log("Just deleted a task!", data);
+        this.getTasks();
+      })
+    }
+
+    getEditForm(id: string): void {
+      this.updateForm = true;
+      this.selectedTaskId = id[0];
+      console.log(this.selectedTaskId);
+    }
+    
+    editTask = () => {
+      let observable = this._httpService.editTask(this.selectedTaskId, this.updatedTask);
+      observable.subscribe(data => {
         this.task = data;
-      })
-    }
-    getOneTask2FromService() {
-      let observable2 = this._httpService.getOneTask2();
-      observable2.subscribe(data => {
-        console.log("Got another task!", data);
-        // this.task = data['task'];
-      })
-    }
-    getOneTask3FromService() {
-      let observable3 = this._httpService.getOneTask3();
-      observable3.subscribe(data => {
-        console.log("Got another task!", data);
-        // this.task = data['task'];
-      })
-    }
-    getOneTask4FromService() {
-      let observable4 = this._httpService.getOneTask4();
-      observable4.subscribe(data => {
-        console.log("Got another task!", data);
-        // this.task = data['task'];
-      })
+        this.getTasks();
+        console.log("Just edited the task!", data);
+        this.updatedTask = {title: '', description: ''}
+      });
     }
 }

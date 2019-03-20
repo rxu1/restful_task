@@ -3,51 +3,52 @@
   <div class="row">
     <div class="col-md-12 text-center border border-primary rounded-lg">
       <h1>Welcome to {{ title }}!</h1>
-      <button class="btn btn-primary" (click)='mainButtonClick()'>Get All Tasks</button>
+      <button class="btn btn-primary" (click)='getTasks()'>Get All Tasks</button>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12 border border-warning rounded-sm" *ngFor="let task of tasks">
       <p>{{task.title}}</p>
-      <p id="{{task._id}}" style="visibility:hidden">{{task.description}}</p>
-      <button (click)='subButtonClick(task._id)'>Show</button>
+      <p id="{{task._id}}" >{{task.description}}</p>
+      <!-- <button class="btn btn-primary" (click)='subButtonClick(task._id)'>Show</button> -->
+      <form style="display: inline-block;" (click)=getEditForm([task._id])>
+        <button class="btn btn-primary">Edit Task</button>
+      </form>
+      <button class="btn btn-secondary" (click)='deleteTask(task._id)'>Delete</button>
     </div>
-  </div>
-  <!-- <div class="row">
-    <div class="col-md-8">
-      <h2>All the Tasks:</h2>
-      <ul>
-        <li *ngFor="let task of tasks">
-          <p>{{task.title}} || {{task.description}}</p>
-        </li>
-      </ul>
-      <input type="text" [(ngModel)]='title'>
-    </div>  
   </div>
   <div class="row">
-    <div class="col-md-8">
-      <h3>First Task:</h3>
-        <ul *ngFor="let task of task">
-          <li>{{task.title}} || {{task.description}}</li>
-        </ul>
-    </div>
-  </div> -->
-  <!-- <div class="row">
-    <div class="col-md-8">
-      <form (submit)="onSubmit()">
-        <p> {{ Task | json }} </p>
-        <input type="text" name="newTask.title" [(ngModel)]="newTask.title" />
-        <input type="text" name="newTask.description" [(ngModel)]="newTask.description" />
-        <input type="submit" value="Create Task"/>
-        <button>Submit</button>
+    <div class="col-md-6">
+      <form class="form-horizontal" (submit)="createTask()">
+        <p> {{ task | json }} </p>
+        <h3>New Task</h3>
+        <div class="form-group">
+          <label>Task title:</label>
+          <input type="text" name="task.title" [(ngModel)]="task.title" />
+        </div>
+        <div class="form-group">
+          <label>Task Description:</label>
+          <input type="text" name="task.description" [(ngModel)]="task.description" />
+        </div>
+        <button class="btn btn-primary">Create Task</button>
       </form>
     </div>
-  </div> -->
-  <!-- <div class="row">
-    <div class="col-md-8" *ngFor="let task of tasks">
-      {{task.title}} || {{task.description}}
+    <div class="col-md-6" *ngIf="updateForm">
+      <form class="form-horizontal" (submit)="editTask()">
+        <p> {{ updatedTask | json }} </p>
+        <h3>Edit Task</h3>
+        <div class="form-group">
+          <label>Title:</label>
+          <input type="text" name="task.title" [(ngModel)]="updatedTask.title" />
+        </div>
+        <div class="form-group">
+          <label>Task Description:</label>
+          <input type="text" name="task.description" [(ngModel)]="updatedTask.description"/>
+        </div>
+        <button class="btn btn-primary">Update Task</button>
+      </form>
     </div>
-  </div> -->
+  </div>
 </div>
   <router-outlet></router-outlet>
 
