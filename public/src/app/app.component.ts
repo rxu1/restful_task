@@ -17,14 +17,21 @@ export class AppComponent implements OnInit {
 
   constructor(private _httpService: HttpService){}
     ngOnInit(){
+      // this.getTasksFromService();
+      // this.getOneTask1FromService();
+      // this.getOneTask2FromService();
+      // this.getOneTask3FromService();
+      // this.getOneTask4FromService();
+    }
+    mainButtonClick() {
       this.getTasksFromService();
-      this.getOneTask1FromService();
-      this.getOneTask2FromService();
-      this.getOneTask3FromService();
-      this.getOneTask4FromService();
+    }
+
+    subButtonClick(id) {
+      let task = document.getElementById(id);
+      task.style.visibility = 'visible'
     }
     getTasksFromService() {
-      console.log('fired');
       let observable = this._httpService.getTasks();
       observable.subscribe(data => {
         console.log("Got our tasks!", data);

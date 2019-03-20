@@ -18,7 +18,10 @@ import { HttpClient } from '@angular/common/http';
     // tempObservable.subscribe(data => console.log("Got our tasks!", data));
     return this._http.get('/api/tasks');
   }
-
+  // getTask(id) {
+  //   let tempObservable = this._http.get(`/api/tasks/${id}`)
+  //   tempObservable.subscribe(data => console.log("Specific task:", data));
+  // }
   createNewTask(data: any) {
     return this._http.post('/api/tasks', data);
   }
